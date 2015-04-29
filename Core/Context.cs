@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace jrobbot
+namespace jrobbot.Core
 {
     public class Context : Dictionary<string,object>
     {

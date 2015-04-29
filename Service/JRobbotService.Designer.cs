@@ -1,4 +1,4 @@
-﻿namespace jrobbot
+﻿namespace jrobbot.Service
 {
     partial class JRobbotService
     {

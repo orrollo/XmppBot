@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using jrobbot.Core;
 
-namespace jrobbot
+namespace jrobbot.Commands
 {
     public static class CmdHelper
     {

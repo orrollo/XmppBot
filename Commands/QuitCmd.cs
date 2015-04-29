@@ -1,8 +1,7 @@
-using System;
-using System.Threading;
 using agsXMPP.protocol.client;
+using jrobbot.Core;
 
-namespace jrobbot
+namespace jrobbot.Commands
 {
     class QuitCmd : BaseCmd
     {

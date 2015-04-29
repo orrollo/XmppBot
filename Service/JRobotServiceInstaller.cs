@@ -2,7 +2,7 @@
 using System.Configuration.Install;
 using System.ServiceProcess;
 
-namespace jrobbot
+namespace jrobbot.Service
 {
     [RunInstaller(true)]
     public class JRobotServiceInstaller : Installer

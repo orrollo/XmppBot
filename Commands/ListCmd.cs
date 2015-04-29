@@ -1,8 +1,10 @@
 ﻿using System.Configuration;
 using System.Net.NetworkInformation;
 using agsXMPP.protocol.client;
+using jrobbot.Configs;
+using jrobbot.Core;
 
-namespace jrobbot
+namespace jrobbot.Commands
 {
     class ListCmd : BaseCmd
     {

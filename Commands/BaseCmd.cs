@@ -1,8 +1,9 @@
 ﻿using System;
 using agsXMPP;
 using agsXMPP.protocol.client;
+using jrobbot.Core;
 
-namespace jrobbot
+namespace jrobbot.Commands
 {
     public abstract class BaseCmd : ICmd
     {

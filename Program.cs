@@ -5,6 +5,9 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
+using jrobbot.Commands;
+using jrobbot.Core;
+using jrobbot.Service;
 
 namespace jrobbot
 {

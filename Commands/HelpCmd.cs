@@ -1,6 +1,7 @@
 using agsXMPP.protocol.client;
+using jrobbot.Core;
 
-namespace jrobbot
+namespace jrobbot.Commands
 {
     class HelpCmd : BaseCmd
     {

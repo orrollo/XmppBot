@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace jrobbot
+namespace jrobbot.Configs
 {
     public class CompInfo : ConfigurationElement
     {

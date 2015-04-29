@@ -1,9 +1,9 @@
-﻿using System;
-using System.Configuration;
-using agsXMPP;
+﻿using System.Configuration;
 using agsXMPP.protocol.client;
+using jrobbot.Configs;
+using jrobbot.Core;
 
-namespace jrobbot
+namespace jrobbot.Commands
 {
     class AuthCmd : BaseCmd
     {

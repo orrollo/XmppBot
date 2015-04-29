@@ -4,10 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using agsXMPP;
-using agsXMPP.Xml.Dom;
 using agsXMPP.protocol.client;
+using jrobbot.Commands;
+using jrobbot.Configs;
 
-namespace jrobbot
+namespace jrobbot.Core
 {
     class JRobbot
     {
