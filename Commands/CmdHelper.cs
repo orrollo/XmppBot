@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using jrobbot.Core;
 
 namespace jrobbot.Commands
 {
     public static class CmdHelper
     {
+		public static string ConfigName(this string extName)
+		{
+			var fullname = Assembly.GetExecutingAssembly().Location;
+			return Path.ChangeExtension(fullname, extName);
+		}
+
         public static string Fmt(this string msg, params object[] args)
         {
             if (args != null && args.Length > 0) msg = string.Format(msg, args);

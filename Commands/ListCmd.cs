@@ -10,18 +10,20 @@ namespace jrobbot.Commands
     {
         public override bool Exec(Message msg)
         {
-            if (!ctx.IsAuth()) return false;
+            if (!context.IsAuth()) return false;
             if (msg.Body.ToLower() != "list") return false;
 
-            // обходим все компьютеры конфигурации и пингуем
-            var config = ConfigurationManager.GetSection("CompInfo") as CompInfoSection;
-            var ping = new System.Net.NetworkInformation.Ping();
-            foreach (CompInfo ci in config.CompInfo)
-            {
-                if (string.IsNullOrEmpty(ci.Ip)) continue;
-                var pi = ping.Send(ci.Ip, 500);
-                JRobbot.Send(conn, msg.From, string.Format("{0} ({1})... {2}\r\n", ci.Name, ci.Ip, pi.Status==IPStatus.Success ? "on" : "off"));
-            }
+			var ping = new Ping();
+			var fileName = CompCfgName.ConfigName();
+	        var computerList = fileName.LoadFromFile<ComputerList>();
+	        foreach (var comp in computerList)
+	        {
+				if (string.IsNullOrEmpty(comp.Ip)) continue;
+				var pi = ping.Send(comp.Ip, 500);
+		        var txt = string.Format("{0} ({1}): {2}\r\n", comp.Name, 
+					comp.Ip, pi.Status == IPStatus.Success ? "online" : "offline");
+		        JRobbot.Send(conn, msg.From, txt);
+	        }
             return true;
         }
     }

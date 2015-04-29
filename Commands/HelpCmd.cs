@@ -11,7 +11,7 @@ namespace jrobbot.Commands
             if (pp.Length == 0 || pp[0] != "HELP") return false;
             JRobbot.Send(conn, msg.From, "Availabale commands:");
             JRobbot.Send(conn, msg.From, "HELP - this text");
-            if (!ctx.IsAuth())
+            if (!context.IsAuth())
             {
                 JRobbot.Send(conn, msg.From, "USER login password - login to system");
             }

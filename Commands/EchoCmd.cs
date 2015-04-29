@@ -8,8 +8,8 @@ namespace jrobbot
     //{
     //    public override bool Exec(Message msg)
     //    {
-    //        if (!ctx.IsAuth()) return false;
-    //        if (!ctx.IsAdmin()) return false;
+    //        if (!context.IsAuth()) return false;
+    //        if (!context.IsAdmin()) return false;
     //        var pp = GetCmdParts(msg);
     //        if (pp.Length != 4 || pp[0] != "ADDCOMP") return false;
     //        // 1 - name, 2 - ip, 3 - mac
@@ -24,7 +24,7 @@ namespace jrobbot
     //        }
 
     //        var ce = new CompInfo();
-    //        ce.Name = name;
+    //        ce.Login = name;
     //        ce.Ip = ip;
     //        ce.Mac = mac;
     //        ce.Descr = name;
@@ -37,7 +37,7 @@ namespace jrobbot
     //{
     //    public override bool Exec(Message msg)
     //    {
-    //        var auth = ctx.GetAs<bool>("isAuth", false);
+    //        var auth = context.GetAs<bool>("isAuth", false);
     //        if (!auth) return false;
     //        JRobbot.Send(conn, msg.From, "echo: " + msg.Body);
     //        return true;

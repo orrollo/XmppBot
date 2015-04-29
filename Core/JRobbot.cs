@@ -205,14 +205,14 @@ namespace jrobbot.Core
 /*
         private static void ProcessMessage(XmppClientConnection conn, Message msg)
         {
-            var ctx = GetContext(msg.From.ToString());
+            var context = GetContext(msg.From.ToString());
             if (string.IsNullOrEmpty(msg.Body)) return;
-            ctx.RefreshTime();
+            context.RefreshTime();
             var err = true;
             foreach (var cmd in cmds)
             {
                 var proc = (ICmd)Activator.CreateInstance(cmd);
-                if (!proc.Exec(conn, msg, ctx)) continue;
+                if (!proc.Exec(conn, msg, context)) continue;
                 err = false;
                 break;
             }

@@ -45,9 +45,6 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -57,12 +54,11 @@
     <Compile Include="Commands\HelpCmd.cs" />
     <Compile Include="Commands\QuitCmd.cs" />
     <Compile Include="Commands\UpCmd.cs" />
-    <Compile Include="Configs\CompInfo.cs" />
-    <Compile Include="Configs\CompInfoCollection.cs" />
-    <Compile Include="Configs\CompInfoSection.cs" />
-    <Compile Include="Configs\UserInfo.cs" />
-    <Compile Include="Configs\UserInfoCollection.cs" />
-    <Compile Include="Configs\UserInfoSection.cs" />
+    <Compile Include="Configs\Computer.cs" />
+    <Compile Include="Configs\ComputerList.cs" />
+    <Compile Include="Configs\User.cs" />
+    <Compile Include="Configs\UserList.cs" />
+    <Compile Include="Configs\XmlHelper.cs" />
     <Compile Include="Core\Context.cs" />
     <Compile Include="Commands\EchoCmd.cs" />
     <Compile Include="Commands\ICmd.cs" />

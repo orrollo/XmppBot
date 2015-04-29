@@ -9,34 +9,35 @@ namespace jrobbot.Commands
     {
         public override bool Exec(Message msg)
         {
-            if (ctx.IsAuth()) return false;
-            //var auth = ctx.GetAs<bool>("isAuth", false);
+            if (context.IsAuth()) return false;
+            //var auth = context.GetAs<bool>("isAuth", false);
             //if (auth) return false;
 
             var pp = GetCmdParts(msg);
-            if (pp.Length == 0 || pp.Length != 3 || pp[0] != "USER")
+	        var fromJid = msg.From;
+	        if (pp.Length == 0 || pp.Length != 3 || pp[0] != "USER")
             {
-                JRobbot.Send(conn, msg.From, "command must be: USER login password");
+                JRobbot.Send(conn, fromJid, "command must be: USER login password");
             }
             else 
             {
                 var login = pp[1].ToLower();
                 var password = pp[2];
 
-                var config = ConfigurationManager.GetSection("UserInfo") as UserInfoSection;
-                var ok = false;
-                foreach (UserInfo ui in config.UserInfo)
-                {
-                    if (ui.Login.ToLower() != login || ui.Password != password) continue;
-                    ok = true;
-                    ctx["isAuth"] = true;
-                    ctx["level"] = ui.IsAdmin ? 2 : 1;
-                    ctx["user"] = ui.Login;
-                    ctx["comp"] = ui.CompName;
-                    JRobbot.Send(conn, msg.From, "welcome, " + ui.Login + "!\r\n");
-                    break;
-                }
-                if (!ok) JRobbot.Send(conn, msg.From, "bad login-password pair" + pp[1]);
+				var ok = false;
+				var userList = UserCfgName.ConfigName().LoadFromFile<UserList>();
+	            foreach (var ui in userList)
+	            {
+					if (ui.Login.ToLower() != login || ui.Password != password) continue;
+					ok = true;
+					context["isAuth"] = true;
+					context["level"] = ui.IsAdmin ? 2 : 1;
+					context["user"] = ui.Login;
+					context["comp"] = ui.CompName;
+					JRobbot.Send(conn, fromJid, "welcome, " + ui.Login + "!\r\n");
+					break;
+	            }
+                if (!ok) JRobbot.Send(conn, fromJid, "bad login-password pair" + pp[1]);
             }
             return true;
         }

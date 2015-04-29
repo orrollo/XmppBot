@@ -54,49 +54,49 @@ namespace jrobbot.Commands
 
         public override bool Exec(Message msg)
         {
-            if (!ctx.IsAuth()) return false;
+            if (!context.IsAuth()) return false;
             var pp = GetCmdParts(msg);
             if (pp.Length == 0 || pp[0] != "UP") return false;
 
-            var comp = ctx.IsAdmin() && pp.Length > 1 ? pp[1] : ctx.GetAs("comp", "");
-            if (string.IsNullOrEmpty(comp))
+			var fromJid = msg.From;
+			var comp = context.IsAdmin() && pp.Length > 1 ? pp[1] : context.GetAs("comp", "");
+
+	        if (string.IsNullOrEmpty(comp))
             {
-                JRobbot.Send(conn, msg.From, "computer name is not set");
+                JRobbot.Send(conn, fromJid, "computer name is not set");
                 return true;
             }
 
-            // ищем комп в списке компов
-            var config = ConfigurationManager.GetSection("CompInfo") as CompInfoSection;
             var ok = false;
-			if (config != null)
+			var fileName = CompCfgName.ConfigName();
+			var computerList = fileName.LoadFromFile<ComputerList>();
+			foreach (var ci in computerList)
 			{
-				foreach (CompInfo ci in config.CompInfo)
+				if (ci.Name.ToLower() != comp.ToLower()) continue;
+				ok = true;
+				var macAddress = ci.Mac.Trim().ToUpper();
+				if (string.IsNullOrEmpty(macAddress))
 				{
-					if (ci.Name.ToLower() != comp.ToLower()) continue;
-					ok = true;
-					var macAddress = ci.Mac.Trim().ToUpper();
-					if (string.IsNullOrEmpty(macAddress))
-					{
-						JRobbot.Send(conn, msg.From, "the MAC address not set for computer <" + comp + ">");
-						break;
-					}
-					if (macAddress.Length != 12)
-					{
-						JRobbot.Send(conn, msg.From, "the MAC address must be 12 chars");
-						break;
-					}
-					//
-					var corr = macAddress.All(ch => ((ch >= '0') && (ch <= '9')) || ((ch >= 'A') && (ch <= 'F')));
-					if (!corr)
-					{
-						JRobbot.Send(conn, msg.From, "the MAC address must be hex humber");
-						break;
-					}
-					WakeFunction(macAddress);
-					JRobbot.Send(conn, msg.From, "wake up packed sended to <" + comp + ">");
+					JRobbot.Send(conn, fromJid, "the MAC address not set for computer <" + comp + ">");
+					break;
 				}
+				if (macAddress.Length != 12)
+				{
+					JRobbot.Send(conn, fromJid, "the MAC address must be 12 chars");
+					break;
+				}
+				//
+				var corr = macAddress.All(ch => ((ch >= '0') && (ch <= '9')) || ((ch >= 'A') && (ch <= 'F')));
+				if (!corr)
+				{
+					JRobbot.Send(conn, fromJid, "the MAC address must be hex humber");
+					break;
+				}
+				WakeFunction(macAddress);
+				JRobbot.Send(conn, fromJid, "wake up packed sended to <" + comp + ">");
 			}
-            if (!ok) JRobbot.Send(conn, msg.From, "computer with name <" + comp + "> not in list");
+
+            if (!ok) JRobbot.Send(conn, fromJid, "computer with name <" + comp + "> not in list");
             return true;
         }
     }

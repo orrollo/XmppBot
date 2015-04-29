@@ -10,7 +10,7 @@ namespace jrobbot.Commands
             var pp = GetCmdParts(msg);
             if (pp.Length == 0 || (pp[0] != "EXIT" && pp[0] != "QUIT" && pp[0] != "Q!")) return false;
             JRobbot.Send(conn, msg.From, "see you!");
-            ctx.Clear();
+            context.Clear();
             throw new ClientStopException();
             return true;
         }
