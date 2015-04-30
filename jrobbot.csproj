@@ -48,10 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddCompCmd.cs" />
+    <Compile Include="Commands\AddUserCmd.cs" />
     <Compile Include="Commands\AuthCmd.cs" />
     <Compile Include="Commands\BaseCmd.cs" />
     <Compile Include="Commands\CmdHelper.cs" />
+    <Compile Include="Commands\DelCompCmd.cs" />
+    <Compile Include="Commands\DelUserCmd.cs" />
     <Compile Include="Commands\HelpCmd.cs" />
+    <Compile Include="Commands\ListCompCmd.cs" />
+    <Compile Include="Commands\ListUserCmd.cs" />
     <Compile Include="Commands\QuitCmd.cs" />
     <Compile Include="Commands\UpCmd.cs" />
     <Compile Include="Configs\Computer.cs" />
