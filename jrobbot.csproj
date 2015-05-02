@@ -40,6 +40,9 @@
     <Reference Include="agsXMPP">
       <HintPath>packages\agsXMPP.1.1.1.0\lib\agsXMPP.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>packages\NLog.3.2.1\lib\net35\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -71,6 +74,7 @@
     <Compile Include="Core\JRobbot.cs" />
     <Compile Include="Configs\JRobotConfig.cs" />
     <Compile Include="Commands\ListCmd.cs" />
+    <Compile Include="Core\Log.cs" />
     <Compile Include="Service\JRobbotService.cs">
       <SubType>Component</SubType>
     </Compile>

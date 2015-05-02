@@ -20,12 +20,13 @@ namespace jrobbot.Commands
             return msg;
         }
 
-        public static void Info(this string msg, params object[] args)
-        {
-            if (args != null && args.Length > 0) msg = string.Format(msg, args);
-            Debug.WriteLine(msg);
-            if (Environment.UserInteractive) Console.WriteLine(msg);
-        }
+        //public static void Info(this string msg, params object[] args)
+        //{
+        //    if (args != null && args.Length > 0) msg = string.Format(msg, args);
+        //    Debug.WriteLine(msg);
+        //    //if (Environment.UserInteractive) Console.WriteLine(msg);
+        //    Log.Info(msg);
+        //}
 
         public static bool IsAuth(this Context ctx)
         {

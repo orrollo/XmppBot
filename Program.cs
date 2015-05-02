@@ -7,6 +7,9 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Xml.Serialization;
+using NLog;
+using NLog.Targets;
+using NLog.Config;
 using jrobbot.Commands;
 using jrobbot.Configs;
 using jrobbot.Core;
@@ -22,6 +25,7 @@ namespace jrobbot
 
 	    static void Main(string[] args)
 	    {
+            ConfigureLogs(Environment.UserInteractive);
 		    CreateConfigs();
 
 		    AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
@@ -59,7 +63,32 @@ namespace jrobbot
 
         }
 
-	    private static void CreateConfigs()
+        private static void ConfigureLogs(bool isConsole)
+        {
+            var config = new LoggingConfiguration();
+            
+            // file logs
+            var fileTarget = new FileTarget();
+            fileTarget.FileName = "${basedir}/logs/${shortdate}.log";
+            fileTarget.Layout = "${date} ${logger} ${message}";
+            config.AddTarget("file", fileTarget);
+            var rule2 = new LoggingRule("*", LogLevel.Debug, fileTarget);
+            config.LoggingRules.Add(rule2);
+
+            // console logs
+            if (isConsole)
+            {
+                var consoleTarget = new ColoredConsoleTarget();
+                consoleTarget.Layout = @"${date:format=HH\\:MM\\:ss} ${logger} ${message}";
+                config.AddTarget("console", consoleTarget);
+                var rule1 = new LoggingRule("*", LogLevel.Info, consoleTarget);
+                config.LoggingRules.Add(rule1);
+            }
+
+            LogManager.Configuration = config;
+        }
+
+        private static void CreateConfigs()
 	    {
 		    CreateCompConfig();
 		    CreateUserConfig();
@@ -87,10 +116,12 @@ namespace jrobbot
 
 		private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
         {
-            var error = e.ExceptionObject.ToString();
-            error.Info();
-            string errorLog = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
-            File.AppendText(errorLog);
+            var logger = LogManager.GetCurrentClassLogger();
+            logger.Error("unhandled exception, global trapper:" + e.ExceptionObject.ToString());
+            //var error = e.ExceptionObject.ToString();
+            //error.Info();
+            //string errorLog = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
+            //File.AppendText(errorLog);
         }
     }
 }

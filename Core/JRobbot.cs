@@ -17,20 +17,20 @@ namespace jrobbot.Core
         public static void Start()
         {
             if (thread != null) return;
-            "starting thread...".Info();
+            Log.Trace("starting main thread");
             thread = new Thread(MainCode) {IsBackground = true};
             thread.Start();
-            "started.".Info();
+            Log.Trace("main thread started");
         }
 
         public static void Stop()
         {
             if (thread == null) return;
-            "stopping thread...".Info();
+            Log.Info("stopping main thread");
             if (thread.IsAlive) thread.Abort();
             if (thread.IsAlive) thread.Join(5000);
             thread = null;
-            "stopped.".Info();
+            Log.Info("main thread stopped");
         }
 
         public static string LastError { get; set; }
@@ -42,22 +42,29 @@ namespace jrobbot.Core
 
             conn.OnError += delegate(object sender, Exception exception)
                 {
+                    Log.Error("error in connection: {0}", exception.ToString());
                     LastError = exception.Message;
                     stop = true;
                 };
 
             conn.OnAuthError += (sender, element) =>
                 {
+                    Log.Error("auth error: {0}", element.ToString());
                     LastError = "Auth error";
                     stop = true;
                 };
 
-            conn.OnLogin += sender => 
-                conn.Send(new Presence(ShowType.chat, "Online") {Type = PresenceType.available});
+            conn.OnLogin += sender =>
+                {
+                    Log.Debug("OnLogin event received");
+                    conn.Send(new Presence(ShowType.chat, "Online") { Type = PresenceType.available });
+                };
 
             conn.OnPresence += (sender, pres) =>
                 {
+                    Log.Debug("OnPresence event received, type: {0}", pres.Type.ToString());
                     if (pres.Type != PresenceType.subscribe) return;
+                    Log.Debug("accepting subscription to: {0}", pres.From);
                     (new PresenceManager(conn)).ApproveSubscriptionRequest(pres.From);
                     SendHello(conn, pres.From);
                 };
@@ -66,6 +73,7 @@ namespace jrobbot.Core
             conn.OnMessage += (sender, msg) =>
                 {
                     if (string.IsNullOrEmpty(msg.Body)) return;
+                    Log.Debug("new message from: {0}", msg.From);
                     lock (cc)
                     {
                         var key = msg.From.ToString();
@@ -84,7 +92,7 @@ namespace jrobbot.Core
                     }
                 };
 
-            "connecting to server...".Info();
+            Log.Info("connecting to server...");
             conn.Open();
 
             while (!stop)
@@ -96,18 +104,18 @@ namespace jrobbot.Core
                 catch(ThreadAbortException ex)
                 {
                     stop = true;
-                    "main thread aborted.".Info();
+                    Log.Info("main thread aborted.");
                     break;
                 }
                 catch(Exception e)
                 {
                     stop = true;
-                    "exception: {0}".Info(e.ToString());
+                    Log.Error("exception: {0}", e.ToString());
                     break;
                 }
             }
 
-            "closing connection to server.".Info();
+            Log.Info("closing connection to server.");
             conn.Close();
         }
 
@@ -115,7 +123,7 @@ namespace jrobbot.Core
         private static void ClientThread(string ownId, Dictionary<string, List<Message>> clients, 
             XmppClientConnection conn)
         {
-            "client {0} connected...".Info(ownId);
+            Log.Info("client <{0}> connected...", ownId);
             var last = DateTime.Now;
             var stop = false;
             var cur = new List<Message>();
@@ -162,13 +170,13 @@ namespace jrobbot.Core
                 }
                 catch (Exception e)
                 {
-                    "client thread {0} error: {1}".Info(ownId,e.ToString());
+                    Log.Info("client thread {0} error: {1}", ownId,e.ToString());
                     stop = true;
                 }
             }
             //
             lock (clients) { clients.Remove(ownId); }
-            "client {0} thread finished.".Info(ownId);
+            Log.Info("client {0} thread finished.", ownId);
         }
 
         //protected static Type[] cmds = new Type[]
