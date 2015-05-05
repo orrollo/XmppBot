@@ -12,7 +12,7 @@ namespace jrobbot.Commands
             if (!context.IsAuth() || !context.IsAdmin()) return false;
             var pp = GetCmdParts(msg);
             if (pp.Length == 0 || pp[0] != "UPDCOMP") return false;
-            var ok = pp.Length != 4;
+            var ok = pp.Length == 4;
             if (ok)
             {
                 pp[2] = pp[2].ToUpper();
