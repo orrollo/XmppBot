@@ -63,6 +63,8 @@
     <Compile Include="Commands\ListUserCmd.cs" />
     <Compile Include="Commands\QuitCmd.cs" />
     <Compile Include="Commands\UpCmd.cs" />
+    <Compile Include="Commands\UpdCompCmd.cs" />
+    <Compile Include="Commands\UpdUserCmd.cs" />
     <Compile Include="Configs\Computer.cs" />
     <Compile Include="Configs\ComputerList.cs" />
     <Compile Include="Configs\User.cs" />

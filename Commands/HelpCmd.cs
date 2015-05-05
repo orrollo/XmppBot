@@ -1,5 +1,6 @@
 using agsXMPP.protocol.client;
 using jrobbot.Core;
+using System.Text;
 
 namespace jrobbot.Commands
 {
@@ -9,27 +10,35 @@ namespace jrobbot.Commands
         {
             var pp = GetCmdParts(msg);
             if (pp.Length == 0 || pp[0] != "HELP") return false;
-            JRobbot.Send(conn, msg.From, "Availabale commands:");
-            JRobbot.Send(conn, msg.From, "HELP - this text");
+            var sb = new StringBuilder();
+            sb.AppendLine("Availabale commands:");
+            sb.AppendLine("HELP - this text");
             if (!context.IsAuth())
             {
-                JRobbot.Send(conn, msg.From, "USER login password - login to system");
+                sb.AppendLine("USER login password - login to system");
             }
             else
             {
-                JRobbot.Send(conn, msg.From, "LIST - show list of online computers");
-                JRobbot.Send(conn, msg.From, "UP - wake up computer, connected to user");
+                sb.AppendLine("LIST - show list of online computers");
+                sb.AppendLine("UP - wake up computer, connected to user");
+                sb.AppendLine("QUIT - logout from system");
                 if (context.IsAdmin())
                 {
-                    JRobbot.Send(conn, msg.From, "LISTCOMP - show list of computers");
-                    JRobbot.Send(conn, msg.From, "ADDCOMP name ip mac - add computer to list");
-                    JRobbot.Send(conn, msg.From, "DELCOMP name - remove computer from list");
-                    JRobbot.Send(conn, msg.From, "LISTUSER - show list of users");
-                    JRobbot.Send(conn, msg.From, "ADDUSER login password admin comp - add user to list");
-                    JRobbot.Send(conn, msg.From, "DELUSER login - remove user from list");
+                    sb.AppendLine("");
+                    sb.AppendLine("admin commands:");
+                    sb.AppendLine("");
+                    sb.AppendLine("LISTCOMP - show list of computers");
+                    sb.AppendLine("ADDCOMP name ip mac - add computer to list");
+                    sb.AppendLine("DELCOMP name - remove computer from list");
+                    sb.AppendLine("UPDCOMP name (NAME|IP|MAC) value - update computer data");
+                    sb.AppendLine("");
+                    sb.AppendLine("LISTUSER - show list of users");
+                    sb.AppendLine("ADDUSER login password admin comp - add user to list");
+                    sb.AppendLine("DELUSER login - remove user from list");
+                    sb.AppendLine("UPDUSER login (LOGIN|PASSWORD|ISADMIN|COMP) value - update user data");
                 }
-                JRobbot.Send(conn, msg.From, "QUIT - logout from system");
             }
+            JRobbot.Send(conn, msg.From, sb.ToString());
             return true;
         }
     }
