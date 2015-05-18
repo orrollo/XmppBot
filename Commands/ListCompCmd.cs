@@ -13,9 +13,9 @@ namespace jrobbot.Commands
             if (pp.Length <= 0 || pp[0] != "LISTCOMP") return false;
             var fileName = CompCfgName.ConfigName();
             var computerList = fileName.LoadFromFile<ComputerList>();
-            JRobbot.Send(conn, msg.From, "Computers are:");
+            JRobbot.Send(msg.From, "Computers are:");
             foreach (var ci in computerList) 
-                JRobbot.Send(conn, msg.From, "{0} {1} {2}".Fmt(ci.Name, ci.Ip, ci.Mac));
+                JRobbot.Send(msg.From, "{0} {1} {2}".Fmt(ci.Name, ci.Ip, ci.Mac));
             return true;
         }
     }

@@ -13,9 +13,9 @@ namespace jrobbot.Commands
             if (pp.Length <= 0 || pp[0] != "LISTUSER") return false;
             var fileName = UserCfgName.ConfigName();
             var userList = fileName.LoadFromFile<UserList>();
-            JRobbot.Send(conn, msg.From, "Users are:");
+            JRobbot.Send(msg.From, "Users are:");
             foreach (var ui in userList)
-                JRobbot.Send(conn, msg.From, "{0} *** {1} {2}".Fmt(ui.Login, ui.IsAdmin, ui.CompName));
+                JRobbot.Send(msg.From, "{0} *** {1} {2}".Fmt(ui.Login, ui.IsAdmin, ui.CompName));
             return true;
         }
     }

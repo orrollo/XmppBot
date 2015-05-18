@@ -14,7 +14,7 @@ namespace jrobbot.Commands
             if (pp.Length <= 0 || pp[0] != "ADDUSER") return false;
             if (pp.Length != 5)
             {
-                JRobbot.Send(conn, msg.From, "command must be: ADDUSER login password isadmin comp");
+                JRobbot.Send(msg.From, "command must be: ADDUSER login password isadmin comp");
             }
             else
             {
@@ -22,7 +22,7 @@ namespace jrobbot.Commands
                 var userList = fileName.LoadFromFile<UserList>();
                 if (userList.Any(x => x.Login.ToUpper() == pp[1].ToUpper()))
                 {
-                    JRobbot.Send(conn, msg.From, "error: user '{0}' already exists".Fmt(pp[1]));
+                    JRobbot.Send(msg.From, "error: user '{0}' already exists".Fmt(pp[1]));
                 }
                 else
                 {
@@ -30,17 +30,17 @@ namespace jrobbot.Commands
                     var computerList = CompCfgName.ConfigName().LoadFromFile<ComputerList>();
                     if (!bool.TryParse(pp[3], out isAdmin))
                     {
-                        JRobbot.Send(conn, msg.From, "error: isadmin must be true or false");
+                        JRobbot.Send(msg.From, "error: isadmin must be true or false");
                     }
                     else if (computerList.All(x=>x.Name.ToUpper()!=pp[4].ToUpper()))
                     {
-                        JRobbot.Send(conn, msg.From, "error: comp '{0}' not found".Fmt(pp[4]));
+                        JRobbot.Send(msg.From, "error: comp '{0}' not found".Fmt(pp[4]));
                     } 
                     else 
                     {
                         userList.Add(new User(pp[1], pp[2], isAdmin, pp[4]));
                         userList.SaveToFile(UserCfgName.ConfigName());
-                        JRobbot.Send(conn, msg.From, "user '{0}' added to list".Fmt(pp[1]));
+                        JRobbot.Send(msg.From, "user '{0}' added to list".Fmt(pp[1]));
                     }
                 }
             }

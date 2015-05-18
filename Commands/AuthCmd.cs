@@ -17,7 +17,7 @@ namespace jrobbot.Commands
 	        var fromJid = msg.From;
 	        if (pp.Length == 0 || pp.Length != 3 || pp[0] != "USER")
             {
-                JRobbot.Send(conn, fromJid, "command must be: USER login password");
+                JRobbot.Send(fromJid, "command must be: USER login password");
             }
             else 
             {
@@ -34,10 +34,10 @@ namespace jrobbot.Commands
 					context["level"] = ui.IsAdmin ? 2 : 1;
 					context["user"] = ui.Login;
 					context["comp"] = ui.CompName;
-					JRobbot.Send(conn, fromJid, "welcome, " + ui.Login + "!\r\n");
+					JRobbot.Send(fromJid, "welcome, " + ui.Login + "!\r\n");
 					break;
 	            }
-                if (!ok) JRobbot.Send(conn, fromJid, "bad login-password pair" + pp[1]);
+                if (!ok) JRobbot.Send(fromJid, "bad login-password pair" + pp[1]);
             }
             return true;
         }

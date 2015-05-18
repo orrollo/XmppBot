@@ -14,7 +14,7 @@ namespace jrobbot.Commands
             if (pp.Length <= 0 || pp[0] != "DELCOMP") return false;
             if (pp.Length != 2)
             {
-                JRobbot.Send(conn, msg.From, "command must be: DELCOMP name");
+                JRobbot.Send(msg.From, "command must be: DELCOMP name");
             }
             else
             {
@@ -23,13 +23,13 @@ namespace jrobbot.Commands
                 var ci = computerList.FirstOrDefault(x => x.Name.ToUpper() == pp[1].ToUpper());
                 if (ci == null)
                 {
-                    JRobbot.Send(conn, msg.From, "error: computer '{0}' not found".Fmt(pp[1]));
+                    JRobbot.Send(msg.From, "error: computer '{0}' not found".Fmt(pp[1]));
                 }
                 else
                 {
                     computerList.Remove(ci);
                     computerList.SaveToFile(CompCfgName.ConfigName());
-                    JRobbot.Send(conn, msg.From, "computer '{0}' removed".Fmt(pp[1]));
+                    JRobbot.Send(msg.From, "computer '{0}' removed".Fmt(pp[1]));
                 }
             }
             return true;

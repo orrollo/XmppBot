@@ -20,7 +20,7 @@ namespace jrobbot.Commands
             }
             if (!ok)
             {
-                JRobbot.Send(conn, msg.From, "command must be: UPDCOMP name (NAME|IP|MAC) value");
+                JRobbot.Send(msg.From, "command must be: UPDCOMP name (NAME|IP|MAC) value");
                 return true;
             }
 
@@ -30,7 +30,7 @@ namespace jrobbot.Commands
 
             if (ci == null)
             {
-                JRobbot.Send(conn, msg.From, "error: computer '{0}' not found".Fmt(pp[1]));
+                JRobbot.Send(msg.From, "error: computer '{0}' not found".Fmt(pp[1]));
                 return true;
             }
 
@@ -39,7 +39,7 @@ namespace jrobbot.Commands
             if (pp[2] == "NAME") ci.Name = pp[3];
 
             computerList.SaveToFile(CompCfgName.ConfigName());
-            JRobbot.Send(conn, msg.From, "computer '{0}' updated".Fmt(pp[1]));
+            JRobbot.Send(msg.From, "computer '{0}' updated".Fmt(pp[1]));
             return true;
         }
     }

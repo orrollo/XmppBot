@@ -6,7 +6,7 @@ namespace jrobbot.Commands
 {
     interface ICmd 
     {
-        void Init(XmppClientConnection conn, Context ctx);
+        void Init(/*XmppClientConnection conn,*/ Context ctx);
         bool Exec(Message msg);
     }
 }

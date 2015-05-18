@@ -20,7 +20,7 @@ namespace jrobbot.Commands
             }
             if (!ok)
             {
-                JRobbot.Send(conn, msg.From, "command must be: UPDUSER login (LOGIN|PASSWORD|ISADMIN|COMP) value");
+                JRobbot.Send(msg.From, "command must be: UPDUSER login (LOGIN|PASSWORD|ISADMIN|COMP) value");
                 return true;
             }
 
@@ -30,7 +30,7 @@ namespace jrobbot.Commands
 
             if (ui == null)
             {
-                JRobbot.Send(conn, msg.From, "error: user '{0}' not found".Fmt(pp[1]));
+                JRobbot.Send(msg.From, "error: user '{0}' not found".Fmt(pp[1]));
                 return true;
             }
 
@@ -41,7 +41,7 @@ namespace jrobbot.Commands
                 bool isAdmin;
                 if (bool.TryParse(pp[3], out isAdmin))
                 {
-                    JRobbot.Send(conn, msg.From, "error: value '{0}' is not boolean".Fmt(pp[3]));
+                    JRobbot.Send(msg.From, "error: value '{0}' is not boolean".Fmt(pp[3]));
                     return true;
                 }
                 ui.IsAdmin = isAdmin;
@@ -49,7 +49,7 @@ namespace jrobbot.Commands
             if (pp[2] == "COMP") ui.CompName = pp[3];
 
             userList.SaveToFile(UserCfgName.ConfigName());
-            JRobbot.Send(conn, msg.From, "user '{0}' updated".Fmt(pp[1]));
+            JRobbot.Send(msg.From, "user '{0}' updated".Fmt(pp[1]));
             return true;
         }
     }

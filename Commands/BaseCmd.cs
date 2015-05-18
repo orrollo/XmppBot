@@ -10,12 +10,12 @@ namespace jrobbot.Commands
 		public static readonly string CompCfgName = "comps.xml";
 		public static readonly string UserCfgName = "users.xml";
 
-        protected XmppClientConnection conn;
+        //protected XmppClientConnection conn;
         protected Context context;
 
-        public void Init(XmppClientConnection conn, Context ctx)
+        public void Init(/*XmppClientConnection conn,*/ Context ctx)
         {
-            this.conn = conn;
+            //this.conn = conn;
             this.context = ctx;
         }
 

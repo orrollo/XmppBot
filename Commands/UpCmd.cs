@@ -63,7 +63,7 @@ namespace jrobbot.Commands
 
 	        if (string.IsNullOrEmpty(comp))
             {
-                JRobbot.Send(conn, fromJid, "computer name is not set");
+                JRobbot.Send(fromJid, "computer name is not set");
                 return true;
             }
 
@@ -77,26 +77,26 @@ namespace jrobbot.Commands
 				var macAddress = ci.Mac.Trim().ToUpper();
 				if (string.IsNullOrEmpty(macAddress))
 				{
-					JRobbot.Send(conn, fromJid, "the MAC address not set for computer <" + comp + ">");
+					JRobbot.Send(fromJid, "the MAC address not set for computer <" + comp + ">");
 					break;
 				}
 				if (macAddress.Length != 12)
 				{
-					JRobbot.Send(conn, fromJid, "the MAC address must be 12 chars");
+					JRobbot.Send(fromJid, "the MAC address must be 12 chars");
 					break;
 				}
 				//
 				var corr = macAddress.All(ch => ((ch >= '0') && (ch <= '9')) || ((ch >= 'A') && (ch <= 'F')));
 				if (!corr)
 				{
-					JRobbot.Send(conn, fromJid, "the MAC address must be hex humber");
+					JRobbot.Send(fromJid, "the MAC address must be hex humber");
 					break;
 				}
 				WakeFunction(macAddress);
-				JRobbot.Send(conn, fromJid, "wake up packed sended to <" + comp + ">");
+				JRobbot.Send(fromJid, "wake up packed sended to <" + comp + ">");
 			}
 
-            if (!ok) JRobbot.Send(conn, fromJid, "computer with name <" + comp + "> not in list");
+            if (!ok) JRobbot.Send(fromJid, "computer with name <" + comp + "> not in list");
             return true;
         }
     }

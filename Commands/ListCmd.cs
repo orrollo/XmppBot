@@ -22,7 +22,7 @@ namespace jrobbot.Commands
 				var pi = ping.Send(comp.Ip, 500);
 		        var txt = string.Format("{0} ({1}): {2}\r\n", comp.Name, 
 					comp.Ip, pi.Status == IPStatus.Success ? "online" : "offline");
-		        JRobbot.Send(conn, msg.From, txt);
+		        JRobbot.Send(msg.From, txt);
 	        }
             return true;
         }

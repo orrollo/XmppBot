@@ -14,7 +14,7 @@ namespace jrobbot.Commands
             if (pp.Length <= 0 || pp[0] != "DELUSER") return false;
             if (pp.Length != 2)
             {
-                JRobbot.Send(conn, msg.From, "command must be: DELUSER login");
+                JRobbot.Send(msg.From, "command must be: DELUSER login");
             }
             else
             {
@@ -23,13 +23,13 @@ namespace jrobbot.Commands
                 var ui = userList.FirstOrDefault(x => x.Login.ToUpper() == pp[1].ToUpper());
                 if (ui == null)
                 {
-                    JRobbot.Send(conn, msg.From, "error: user '{0}' not found".Fmt(pp[1]));
+                    JRobbot.Send(msg.From, "error: user '{0}' not found".Fmt(pp[1]));
                 }
                 else
                 {
                     userList.Remove(ui);
                     userList.SaveToFile(UserCfgName.ConfigName());
-                    JRobbot.Send(conn, msg.From, "user '{0}' removed".Fmt(pp[1]));
+                    JRobbot.Send(msg.From, "user '{0}' removed".Fmt(pp[1]));
                 }
             }
             return true;

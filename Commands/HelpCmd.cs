@@ -38,7 +38,7 @@ namespace jrobbot.Commands
                     sb.AppendLine("UPDUSER login (LOGIN|PASSWORD|ISADMIN|COMP) value - update user data");
                 }
             }
-            JRobbot.Send(conn, msg.From, sb.ToString());
+            JRobbot.Send(msg.From, sb.ToString());
             return true;
         }
     }
