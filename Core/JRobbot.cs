@@ -135,11 +135,19 @@ namespace jrobbot.Core
 						}
 						if (needReconnect)
 						{
-							Log.Info("Try to reconnect to server");
-							conn.Close();
-							conn = CreateConnection(prm);
-							waitStep = 0;
-							conn.Open();
+							try
+							{
+								Log.Info("Try to reconnect to server");
+								conn.Close();
+								conn = CreateConnection(prm);
+								waitStep = 0;
+								conn.Open();
+							}
+							catch (Exception ex)
+							{
+								Log.Error("exception during reconnect: {0}", ex.ToString());
+								Log.Error("stack trace: {0}",ex.StackTrace);
+							}
 						}
 						oldTime = DateTime.Now;
 					}
